@@ -1,2 +1,30 @@
 O laravel cashier stripe oferece um grupo de funcionalidades para lidar com pagamento
-e gerenciamento de planos 
+e gerenciamento de planos, ao instalr o cashier ele tambem traz o stripe.
+
+STRIPE 
+  tem varios serviços de cobrança, implantados
+
+CASHIER 
+  oferece a interface qua facilita lidar com esses serviços
+
+Embora venham juntos na instalação eles são 2 coisas diferentes 
+
+link da doc "https://laravel.com/docs/12.x/billing"
+
+intalando o stripe 
+ composer require laravel/cashier
+
+Apos executar esse comando: " php artisan vendor:publish --tag="cashier-migrations "
+
+O stripe traz algumas migrations depois que executa-las na atebla de usuario seram 
+adicionados alguns campos mas o foco deve ser nesses 
+
+1 - stripe_id -> e a identificação do cliente no ambiente stripe
+2 - pm_type   -> é o tipo de pagamentoi que cliente vai usar parar apgar pelo plano dele 
+3 - pm_last_for -> esse campo contem os 4 ulimos digitos do cartão de crédito do cliente 
+4 - trial_ends_at -> é a quantidade de dias de teste do plano caso eu tenha uma assinatura onde o cliente possa testar 
+
+Criando o arquivo de configurações parara o cashier
+
+ php artisan vendor:publish --tag="cashier-config"
+

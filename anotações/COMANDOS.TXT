@@ -1,1 +1,4 @@
 php artisan db:seed --class=DatabaseSeeder
+composer require laravel/cashier
+php artisan vendor:publish --tag="cashier-migrations"
+php artisan migrate
