@@ -28,3 +28,19 @@ Criando o arquivo de configurações parara o cashier
 
  php artisan vendor:publish --tag="cashier-config"
 
+Para usar esse serviços eu fiz uma conta no stripe que seria o hub que fornce esses serviçõs de pagamento
+na dashboard tem uma area chemada dessenvolvedores e eu tenho que clicar na opção "workbench" 
+nessa pagina eu consigo ver o historico de erros na api  e  consigo ver tambem as minhas chaves de teste 
+
+no workbench aparecem 2 infomações importantes de integração 
+
+1 -chave publicavel 
+2 -chave secreta 
+
+e nas configurações do cashier tem 2 espaçoes parara preecher esses dados 
+
+ 'key' => env('STRIPE_KEY'),
+
+ 'secret' => env('STRIPE_SECRET'),
+
+ 
