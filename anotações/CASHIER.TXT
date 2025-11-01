@@ -1,0 +1,2 @@
+O laravel cashier stripe oferece um grupo de funcionalidades para lidar com pagamento
+e gerenciamento de planos 
