@@ -32,15 +32,82 @@ Para usar esse serviços eu fiz uma conta no stripe que seria o hub que fornce e
 na dashboard tem uma area chemada dessenvolvedores e eu tenho que clicar na opção "workbench" 
 nessa pagina eu consigo ver o historico de erros na api  e  consigo ver tambem as minhas chaves de teste 
 
-no workbench aparecem 2 infomações importantes de integração 
+no workbench aparecem 2 informações importantes de integração 
 
 1 -chave publicavel 
 2 -chave secreta 
 
-e nas configurações do cashier tem 2 espaçoes parara preecher esses dados 
+e nas configurações do cashier tem 2 espaços para preecher esses dados 
+no primeiro espaço fica a chave pulica e na segunda a chave secreta 
 
  'key' => env('STRIPE_KEY'),
 
  'secret' => env('STRIPE_SECRET'),
 
+depois de colocfar essas chaves na palicação a proxima etapa e dapatar o model 
+de usuários para lidar com isso, para a configurar eu tenho que adicionar um trate 
+na classe do model.
+
+TRATE 
+ é um conjunto de funcionalidades quq vem inclusas em um arquivo é como se um trate 
+ fosse uma contate que representa uma conjunto de metodos, o trate que eu vou adcionar 
+ se chama Billable é um trate que só existe se o cashier estiver instalado.
+
+ colcando ele no model eu não preciso saber como a api do cashier funciona eu so preciso
+ chamar os metodos e colocar os parametros.
+
+
+
+Model com o Billable instalado
+--------------------------------------------------------------------------------------
+class User extends Authenticatable
+{
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable,Billable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}
+------------------------------------------------------------------------
+
+Como se trata de um sistema de pagamentos depois que o clite paga ele precisa saber se o pagamento 
+foi feito com sucesso pra isso usamos um " webhook " que executa funções de call back onde o stripe
+se comunica com o sistema para dar avisos por exemplo 
+
+1 - cliente clica em comprar(stripe recebe o aviso e passa que tem uma pessoa interessada no produto)
+2 - cliente faz o cadastro (stripe recebe a ção de cadastro e avisa ao sistema )
+3 - cliente paga o plano o stripe recebe e avisa se deu certo ou não o pagamento 
+
+isso acontece sem que eu precise fazer uma consulta manualmente 
  
