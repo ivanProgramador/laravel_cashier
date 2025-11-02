@@ -32,6 +32,10 @@ Para usar esse serviços eu fiz uma conta no stripe que seria o hub que fornce e
 na dashboard tem uma area chemada dessenvolvedores e eu tenho que clicar na opção "workbench" 
 nessa pagina eu consigo ver o historico de erros na api  e  consigo ver tambem as minhas chaves de teste 
 
+
+1946341589
+
+
 no workbench aparecem 2 informações importantes de integração 
 
 1 -chave publicavel 
@@ -109,5 +113,37 @@ se comunica com o sistema para dar avisos por exemplo
 2 - cliente faz o cadastro (stripe recebe a ção de cadastro e avisa ao sistema )
 3 - cliente paga o plano o stripe recebe e avisa se deu certo ou não o pagamento 
 
-isso acontece sem que eu precise fazer uma consulta manualmente 
- 
+isso acontece sem que eu precise fazer uma consulta manualmente, a instalação do cashier 
+criou algumas rotas dentro do sistema são elas 
+
+  GET|HEAD   / ........................................................................................................................  
+  GET|HEAD   storage/{path} ............................................................................................. storage.local  
+  GET|HEAD   stripe/payment/{id} ........................................... cashier.payment › Laravel\Cashier › PaymentController@show  
+  POST       stripe/webhook ....................................... cashier.webhook › Laravel\Cashier › WebhookController@handleWebhook  
+  GET|HEAD   up ....................................................................................................................... 
+
+na dashboard do stripe tem na aba de dessenvolvedores tema a aba webhook no caso como a aminha aplicação e local 
+existe a opção "Teste com um ouvinbte local" porque a aopção adicionar destino seria parara uma aplicação real.
+quando eu escolho essa opção ele moistra uma passo a passo  mas par executar vai se preciso instalar a stripe CLI 
+que e a interface compativel com esses comandos 
+
+depois que o cli for baixado tem qua colocar ele na raiz do projeto e depois executar os comandos 
+apontando pra ele  depois esecutar comando 1 vai aparecer uma url no terminal que vai pra pagina
+de confirmação onde el evai ter certeza de qua login não esta sendo feito por um entruso, apos permitir o acesso 
+use o comando 2    
+
+1 - ./stripe login
+
+Nesse caso eu preciso adaptar 
+
+2 - ./stripe listen --forward-to http://localhost/laravel_cashier/public/stripe/webhook
+
+depois que eu executar esse comando ele vai verificar se as cheves da api estão nos luares certos 
+a chave publica e a secreta  e vai passar o secret do webhook ela parece com isso eu mudei alguns 
+caracteres para não mostrar a original   
+
+whsec_c861e63be5893fe0e7b86c23ea85280ed44nfd05ede585b79fbf6d813f1b708b
+
+
+
+3 - ./stripe trigger payment_intent.succeeded
