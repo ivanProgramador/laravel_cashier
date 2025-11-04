@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
     public function loginPage(){
          return view('login');
+    }
+
+    public function loginSubmit($id){
+         //login direto 
+
+         $user = User::findOrFail($id);
+         if($user){
+            auth()->login($user);
+            echo "Usuário logado com sucesso".auth()->user()->name;
+         }
     }
 }
