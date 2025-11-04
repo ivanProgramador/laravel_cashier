@@ -138,7 +138,7 @@ Nesse caso eu preciso adaptar
 
 2 - ./stripe listen --forward-to http://localhost/laravel_cashier/public/stripe/webhook
 
-depois que eu executar esse comando ele vai verificar se as cheves da api estão nos luares certos 
+depois que eu executar esse comando ele vai verificar se as chaves da api estão nos luares certos 
 a chave publica e a secreta  e vai passar o secret do webhook ela parece com isso eu mudei alguns 
 caracteres para não mostrar a original   
 
