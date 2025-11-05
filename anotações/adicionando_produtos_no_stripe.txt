@@ -1,0 +1,54 @@
+Como se trata de venda um porduto deve ser cadastrado no stripe 
+1 - clicar em catalogo de produtos
+2 - clicar em adiocnar produto 
+3 - Definir as informações do produto   
+      - Nome do produto   
+      - Descrição 
+      - foto (eu não vou nusar mas existe essa possibilidade)
+      - se o pagamento é recorrente ou se é avulso
+      - o valor do produto eo faturamento que pode ser: mensal, anual, trimestral entre outros.
+      - no caso de um faturamento mensal o stripe vai contar 30 dias da data do pagamento até o final do plano 
+        se o cliente não fizer um novo pagamento os serviço vai ser suspenso.
+
+4 - clicar em adicionar produto   
+5 - para adcionar mais preços tem que clicar em aditar o produto
+    e clicar em adicionar outro preço definir as condições de faturamento
+    clicar em atualizar produto  
+
+
+Acessando os produtos e colocando nos links
+
+Dento do strpe eu cadastrei um produto com 3 preçose cada um desses preços tem um id 
+então no meu .env eu crir uma constante para acada um  
+
+STRIPE_PRODUCT_ID = "prod_TMfflDQPfU9YBW"
+STRIPE_MONTHLY_PRICE_ID ="price_1SPwKQ2cCDkaioJGOLWmDf9y"
+STRIPE_YEARLY_PRICE_ID = "price_1SPwMx2cCDkaioJGbdHnnYry"
+STRIPE_LONGEST_ID ="price_1SPwOm2cCDkaioJGWgubiVxk"
+
+Agora eu tenho uma referencia local dos dados do produto agora e so criar uma rota  
+pra receber esse id e tratar ele dentro de um metodo 
+
+Route::get('/plan_selected/{id}',[MainController::class,'planSelected'])->name('plano.selecrionado');
+
+dentro do metodo eu fiz uma array  onde ue coloquei o id do produto e acada uma dos preços ligados a ele 
+
+public function planos(){
+
+     $prices=[
+          "monthly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_MONTHLY_PRICE_ID'),
+          "yearly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_YEARLY_PRICE_ID'),
+          "longest"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_LONGEST_ID')
+     ];
+
+     
+
+     
+      
+     return view('plans',compact('prices'));
+     
+    }
+
+
+
+

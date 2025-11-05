@@ -30,8 +30,18 @@ class MainController extends Controller
     }
 
     public function planos(){
+
+     $prices=[
+          "monthly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_MONTHLY_PRICE_ID'),
+          "yearly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_YEARLY_PRICE_ID'),
+          "longest"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_LONGEST_ID')
+     ];
+
+     
+
+     
       
-     return view('plans');
+     return view('plans',compact('prices'));
      
     }
 
