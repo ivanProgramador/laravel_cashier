@@ -31,7 +31,7 @@ pra receber esse id e tratar ele dentro de um metodo
 
 Route::get('/plan_selected/{id}',[MainController::class,'planSelected'])->name('plano.selecrionado');
 
-dentro do metodo eu fiz uma array  onde ue coloquei o id do produto e acada uma dos preços ligados a ele 
+dentro do metodo eu fiz uma array  onde eu coloquei o id do produto e acada um dos preços ligados a ele 
 
 public function planos(){
 
@@ -48,6 +48,39 @@ public function planos(){
      return view('plans',compact('prices'));
      
     }
+
+Quando a rota é acionada ela envia o array  dando a possibilidade de seleção dos indices entre os links dos 
+elementos por exemplo, o elemento abaixo seleciona o indice mounthly que correponde a o ide do preço mensal 
+dentro do array:
+
+
+link 
+ <a href="{{ route('plano.selected',['id'=>$prices['monthly']]) }}" class="btn btn-secondary mt-3 w-100">ASSINAR</a>
+  
+-----------------------------------------------------------------------------------------
+array 
+
+     $prices=[
+          "monthly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_MONTHLY_PRICE_ID'),
+          "yearly"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_YEARLY_PRICE_ID'),
+          "longest"=>env('STRIPE_PRODUCT_ID').'|'.env('STRIPE_LONGEST_ID')
+     ];
+
+ ----------------------------------------------------------------------------------    
+elemento completo 
+
+           <div class="col-4 p-3">
+                <div class="border border-2 rounded-3 border-secondary p-5 text-center">
+                    <h3>Plano Mensal</h1>
+                    <hr>
+                    <h1 class="text-center text-white">9.99$ / mês</h4>
+                    <a href="{{ route('plano.selected',['id'=>$prices['monthly']]) }}" class="btn btn-secondary mt-3 w-100">ASSINAR</a>
+                </div>
+            </div>
+
+-----------------------------------------------------------------------------------
+
+
 
 
 
