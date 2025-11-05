@@ -17,7 +17,24 @@ class MainController extends Controller
          $user = User::findOrFail($id);
          if($user){
             auth()->login($user);
-            echo "Usuário logado com sucesso".auth()->user()->name;
+            return redirect()->route('planos');
          }
     }
+
+    public function logout(){
+
+      auth()->logout();
+
+      return redirect()->route('login');
+      
+    }
+
+    public function planos(){
+      
+     return view('plans');
+     
+    }
+
 }
+    
+

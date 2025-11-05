@@ -19,11 +19,11 @@
                 </div>
                 
                 <div class="text-center mb-3">
-                    <a href="#" class="btn btn-lg px-5 btn-info">Login user 2</a>
+                    <a href="{{ route('login.submit',['id'=>2]) }}" class="btn btn-lg px-5 btn-info">Login user 2</a>
                 </div>
 
                 <div class="text-center mb-3">
-                    <a href="#" class="btn btn-lg px-5 btn-info">Login user 3</a>
+                    <a href="{{ route('login.submit',['id'=>3]) }}" class="btn btn-lg px-5 btn-info">Login user 3</a>
                 </div>
 
             </div>
