@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isGuest
+class noSubscription
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,11 @@ class isGuest
      */
     public function handle(Request $request, Closure $next): Response
     {
-         if(auth()->check()){
-             return redirect()->route('planos');
-        }
-         return $next($request);
-       
+      
+      if(auth()->user()->subscribed('default')) {
+           return redirect()->route('dashboard');
+      }
+      return $next($request);
+
     }
 }

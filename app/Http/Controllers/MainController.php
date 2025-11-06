@@ -54,7 +54,7 @@ class MainController extends Controller
       //se estiver
       
       $plan = explode('|', $plan);
-      $product_id = $plan[0];
+      $default = $plan[0];
       $price_id = $plan[1];
 
        //abaixo estou chamando as funções diponiveis dentro do Billable
@@ -68,7 +68,7 @@ class MainController extends Controller
          CVC: Qualquer sequência de 3 dígitos (para American Express, use 4 dígitos)   
        */
         return auth()->user()
-        ->newSubscription($product_id,$price_id)
+        ->newSubscription('default',$price_id)
         ->trialDays(5)
         ->allowPromotionCodes()
         ->checkout([
@@ -82,6 +82,11 @@ class MainController extends Controller
     }
     public function subscriptionSuccess(){
        echo"inscrição feita com sucesso ";
+    }
+
+    
+    public function dashboard(){
+       echo "dashboard ";
     }
 
 }

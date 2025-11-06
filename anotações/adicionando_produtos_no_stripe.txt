@@ -80,6 +80,41 @@ elemento completo
 
 -----------------------------------------------------------------------------------
 
+Como o stripe sabe que o cliente comprou um produto, e que produto foi comprado ?
+
+    Foi adicionado no model uma classe chamada "Billable" essa classe vem junto com o 
+    stripe quando ele é adicionado ao sistema e essa classe possui alguns metodos que 
+    facilitam a manipulação da integração. 
+
+    1- metodo "newSubscription" recebe o id do produto e o  id do preço selecionado 
+    ja que o meu porduto tem 3 preços diferentes 
+
+    2 - metodo "trialDays" nesse caso eu coloquei 5 dias de teste mas eu podeia colocar 0 
+
+    3 - metodo "allowPromotionCodes" caso o cliente tenha algm codigo de pormoção eo posso colocar nele 
+
+    4 - metodo "checkout" esse metodo recebe um array com a "success_url" se a requisição der certo e o cliente 
+        conseguir finalizar o pagamento e a "cancel_url" se der algum erro ele vai retornar pra ela   
+    
+     Basicamente a junção desses metodos é como se fosse um formulario com os dados de pagamento que são enviados 
+     para a plataforma no fim da execução do metodo chamado pela rota.  
+
+    return auth()->user()
+        ->newSubscription($product_id,$price_id)
+        ->trialDays(5)
+        ->allowPromotionCodes()
+        ->checkout([
+            'success_url' => route('subscription.success'),
+            'cancel_url' => route('planos'),
+        ]);
+    
+    Apagando usuários da plataforma basta ir na aba cliente e selecionar e clicar em excluir 
+    mas isso não apaga somente na palataforma o stripe fazx uma reuicição pra dentro da base de 
+    dados do sistema e apaga os stripe id de cada usuario deletado.    
+
+
+
+
 
 
 
