@@ -18,7 +18,10 @@ Route::middleware([isUser::class])->group(function(){
     Route::get('/logout',[MainController::class,'logout'])->name('logout');
     Route::get('/planos',[MainController::class,'planos'])->name('planos');
     Route::get('/plan_selected/{id}',[MainController::class,'planSelected'])->name('plano.selected');
+    Route::get('/subscription/success',[MainController::class,'subscriptionSuccess'])->name('subscription.success');
 });
+
+
 
 
 

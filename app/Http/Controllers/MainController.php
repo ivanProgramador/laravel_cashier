@@ -11,7 +11,6 @@ class MainController extends Controller
     public function loginPage(){
          return view('login');
     }
-
     public function loginSubmit($id){
          //login direto 
 
@@ -21,7 +20,6 @@ class MainController extends Controller
             return redirect()->route('planos');
          }
     }
-
     public function logout(){
 
       auth()->logout();
@@ -29,7 +27,6 @@ class MainController extends Controller
       return redirect()->route('login');
       
     }
-
     public function planos(){
 
      $prices=[
@@ -56,10 +53,35 @@ class MainController extends Controller
       
       //se estiver
       
-      $data = explode('|', $plan);
-      echo"Product ID: ".$data[0]."<br>";
-      echo"Product PRICE_ID: ".$data[1]."<br>";
+      $plan = explode('|', $plan);
+      $product_id = $plan[0];
+      $price_id = $plan[1];
+
+       //abaixo estou chamando as funções diponiveis dentro do Billable
+       // depois que esse metodo é executado ele vai para uma apgina interna do stripe 
+       //que vai pedir a numerção do cartão e confirmação de pagamento 
+       //dados de teste 
+       
+       /*
+         Número do Cartão: 4242 4242 4242 4242
+         Data de Validade (MM/AA): Qualquer data futura (ex: 12/34)
+         CVC: Qualquer sequência de 3 dígitos (para American Express, use 4 dígitos)   
+       */
+        return auth()->user()
+        ->newSubscription($product_id,$price_id)
+        ->trialDays(5)
+        ->allowPromotionCodes()
+        ->checkout([
+            'success_url' => route('subscription.success'),
+            'cancel_url' => route('planos'),
+        ]);
+
+
       
+      
+    }
+    public function subscriptionSuccess(){
+       echo"inscrição feita com sucesso ";
     }
 
 }
