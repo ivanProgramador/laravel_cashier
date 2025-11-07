@@ -1,0 +1,16 @@
+No caso embora existam funções de integração de pagamentos e controle dos planos 
+dentro da plataforma stripe esses dados tambem devem estar disponiveis dentro da 
+aplicação local.Pra que isso esteja disponivel para os gestores.
+
+dentro do cadastro de uma usuario feito pelo stripe exisstem algumass infomaçoes que 
+podem ser consultadas atraves de alguns metodos padrão, no caso abaixo eu estou usando 
+esses metodos parara obter essedados com base no usuario que esta autenticado.O codigo abaixo 
+vai me infomar quando o plano desse cliente vai expirar.         
+
+
+       $timespamp = auth()->user()->subscription('STRIPE_PRODUCT_ID')
+                          ->asStripeSubscription()
+                          ->current_period_end;
+
+Isso eu posso fazer com qualquer dados que eu precise retronar para uma view ou rota caso 
+exista uma outra aplicação que precise do json com esses dados.

@@ -81,13 +81,35 @@ class MainController extends Controller
       
     }
     public function subscriptionSuccess(){
-       echo"inscrição feita com sucesso ";
+      return view('subscription_success');
     }
-
-    
     public function dashboard(){
-       echo "dashboard ";
+       $data=[];
+
+       //verificando quando a inscrição do cliente vai expirar 
+
+       $timespamp = auth()->user()->subscription('STRIPE_PRODUCT_ID')
+                          ->asStripeSubscription()
+                          ->current_period_end;
+
+       $data['subscription_end'] = date('d/m/Y H:i:s');
+
+       //pegando faturas 
+
+       $faturas = auth()->user()->invoices();
+       
+       //colocando a alista de faturas em um indice do array $data[]
+
+       $data['faturas'] = $faturas;
+
+       return view('dashboard',$data);
     }
+    public function invoiceDownload($id){
+    
+      return auth()->user()->invoiceDownload($id);
+         
+    }
+    
 
 }
     

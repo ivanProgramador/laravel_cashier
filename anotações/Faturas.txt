@@ -1,0 +1,48 @@
+Como se trata de uma plaforma de pagamento o stripe tem como devolvar uma fatura para o cliente 
+dentro da plaforma do stripe pra criar a fatura 
+1 - clicar nos clientes 
+2 - clicar na opção gerar fatura 
+
+Dentro da aplicação 
+
+O mesmo grupo de metodos fornecidos pelo Billable tambem tras o metodo "invoices"
+que basicamente consulta todas as faturas do cliente mensionado por exemplo o codigo 
+abaixo vai trazer todos os dados das faturas do cliente. 
+
+  $faturas = auth()->user()->invoices();
+
+porém pra gerar pdf eu vou precisar adicionar mais uma bilioteca ao laravel no caso 
+eu vou usar dompdf conforme a documentação "https://laravel.com/docs/12.x/billing#invoices" 
+sugere.
+
+1 - foi criada uma rota de dowload de fatura 
+
+    Route::get('/invoice/{id}',[MainController::class,'invoiceDownload'])->name('invoice.dowload');
+
+2 - depois um metodo que faz o dowload da fatura quando a rota é acionada 
+    
+     public function invoiceDownload($id){
+    
+      return auth()->user()->invoiceDownload($id);
+         
+    }
+
+3 - como o metodo "invoices()" retorna varias faturas dependendo do tanto de faturas que cliente tiver
+    eu vou usar o foreach pra ler a lista e criar um link para cada fatura. 
+
+     @foreach ($invoices as $invoice)
+        <div class="text-center">
+            <a href="{{ route('invoice.download', $invoice->id) }}" class="btn btn-primary">Download PDF</a>
+        </div>
+     @endforeach 
+
+
+
+     
+     
+
+
+
+
+
+

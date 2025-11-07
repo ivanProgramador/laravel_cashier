@@ -28,12 +28,12 @@ Route::middleware([isUser::class])->group(function(){
        Route::get('/planos',[MainController::class,'planos'])->name('planos');
        Route::get('/plan_selected/{id}',[MainController::class,'planSelected'])->name('plano.selected');
        Route::get('/subscription/success',[MainController::class,'subscriptionSuccess'])->name('subscription.success');
-      
+       Route::get('/invoice/{id}',[MainController::class,'invoice'])->name('invoice.dowload');
      });
 
      //cliente logou e ja tem um plano 
      Route::middleware([hasSubscription::class])->group(function(){
-        Route::get('/dashboard',[MainController::class,'dashboard'])->name('dashboard');
+        Route::get('/dashboard',[MainController::class,'invoiceDownload'])->name('dashboard');
      });
 
    
